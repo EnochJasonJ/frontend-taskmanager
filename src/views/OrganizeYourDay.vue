@@ -3,13 +3,15 @@ import TaskForm from '../components/TaskForm.vue';
 import { ref , onMounted} from 'vue';
 import axios from 'axios';
 const data = ref(null);
+const backendURL = "https://backend-taskmanager-5aqf.onrender.com";
+
 const fetchTasks = async () => {
   try {
     const token = localStorage.getItem("access_token");
     if(!token){
       throw new Error("No token found");
     }
-    const response = await axios.get('http://127.0.0.1:8000/list-tasks/',{
+    const response = await axios.get(`${backendURL}/list-tasks/`,{
       headers: {
         Authorization: `Bearer ${token}`,
       }
@@ -26,7 +28,7 @@ const fetchTasks = async () => {
       if(!token){
         throw new Error("No token found");
       }
-      await axios.delete(`http://127.0.0.1:8000/delete-tasks/${id}/`,{
+      await axios.delete(`${backendURL}/delete-tasks/${id}/`,{
         headers:{
           Authorization: `Bearer ${token}`
         }

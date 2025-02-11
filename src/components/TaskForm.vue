@@ -3,13 +3,14 @@ import { ref , defineEmits} from 'vue';
 import axios from 'axios';
 const task = ref("");
 const emits = defineEmits(['taskAdded']);
+const backendURL = "https://backend-taskmanager-5aqf.onrender.com";
 const addTask = async () => {
   try {
     const token = localStorage.getItem("access_token");
     if(!token){
       throw new Error("No token found");
     }
-    await axios.post('http://127.0.0.1:8000/create-tasks/',{
+    await axios.post(`${backendURL}/create-tasks/`,{
     name: task.value,
     },{
       headers: {

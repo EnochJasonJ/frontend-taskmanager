@@ -2,7 +2,7 @@
 import { ref, inject } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-
+const backendURL = "https://backend-taskmanager-5aqf.onrender.com";
 const router = useRouter();
 const username = ref('');
 const password = ref('');
@@ -10,7 +10,7 @@ const errormessage = ref('');
 const updateAuthStatus = inject("updateAuthStatus");
 const login = async () => {
   try {
-    const response = await axios.post("http://127.0.0.1:8000/token/", {
+    const response = await axios.post(`${backendURL}/token/`, {
       username : username.value,
       password : password.value
     });

@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
-
+const backendURL = "https://backend-taskmanager-5aqf.onrender.com";
 const route = useRoute();
 const router = useRouter();
 const task = ref('');
@@ -12,7 +12,7 @@ const fetchTask = async () => {
     if(!token){
       throw new Error("No token found");
     }
-      const response = await axios.get(`http://127.0.0.1:8000/task/${route.params.id}`,{
+      const response = await axios.get(`${backendURL}/task/${route.params.id}`,{
         headers:{
           Authorization: `Bearer ${token}`
         }
@@ -30,7 +30,7 @@ const updateTask = async () => {
     if(!token){
       throw new Error("No token found");
     }
-    await axios.put(`http://127.0.0.1:8000/update-tasks/${route.params.id}/`, {
+    await axios.put(`${backendURL}/update-tasks/${route.params.id}/`, {
       name: task.value
     },{
       headers:{
