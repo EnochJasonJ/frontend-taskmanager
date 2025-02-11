@@ -52,6 +52,8 @@ const chartOptions = {
         size: 24, // Change chart title font size
       },
       color: "black",
+      align: "center",
+      anchor: "center"
     },
     tooltip: {
       bodyFont: {
@@ -109,8 +111,8 @@ onMounted(fetchAnalytics);
 <!-- <h1 class="flex items-center justify-center">Home Page</h1> -->
 <div class="flex flex-col items-center justify-center ">
   <div v-if="errorMessage">{{ errorMessage }}</div>
-  <div v-else-if="analytics" class="w-[700px] h-[500px]">
-    <Bar :data="chartData" :options="chartOptions" class="text-green-700" />
+  <div v-else-if="analytics" class="w-[400px] sm:w-[700px] h-[500px] sm:h-[700px]">
+    <Bar :data="chartData" :options="chartOptions" class="text-green-700 p-5" />
   </div>
   <div v-else>
     <p>No analytics data available</p>

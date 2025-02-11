@@ -27,14 +27,14 @@ const addTask = async () => {
 </script>
 
 <template>
-    <div class="bg-white w-full h-[100px] flex  items-center justify-center">
+    <div class="bg-white w-full h-[100px] flex -px-1 lg:px-10 items-center justify-center">
       <form @submit.prevent="addTask" autocomplete="off">
-        <div class="flex flex-row items-center justify-center gap-10">
+        <div class="flex flex-row items-center justify-center gap-2 lg:gap-10">
           <div>
             <input type="text" v-model="task" name="task" id="task" placeholder="Task name" class="placeholder:text-center border-2 py-2 px-10 rounded-md outline-none" required>
           </div>
           <div>
-            <button type="submit" class="bg-black text-white px-5 py-2 rounded-md">Add Task</button>
+            <button type="submit" class="bg-black text-blue-200 px-2 lg:px-5 py-2 rounded-md">Add Task</button>
           </div>
         </div>
       </form>

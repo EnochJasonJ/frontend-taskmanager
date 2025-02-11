@@ -62,9 +62,9 @@ onMounted(fetchTasks);
 
 <template>
   <div class="flex flex-col items-center justify-center">
-    <h1>Organize your day</h1>
+    <h1 class="font-bold text-2xl lg:text-4xl">Organize your day</h1>
     <ul v-if="data" class="mb-[100px]">
-      <li v-for="task in data" :key="task.id" class="flex flex-row gap-5 p-5 w-[400px] items-center justify-between bg-red-300 mb-[25px] mt-[25px] rounded-md hover:cursor-pointer hover:scale-[110%] transition-all hover:duration-1000 ease-in-out">
+      <li v-for="task in data" :key="task.id" class="flex flex-row gap-5 p-5 w-[380px] h-[80px] lg:w-[400px] items-center justify-between bg-blue-200 mb-[25px] mt-[25px] rounded-md shadow-md hover:cursor-pointer hover:scale-[110%] transition-all hover:duration-1000 ease-in-out">
         <div class="flex items-center gap-3">
           <label class="flex items-center gap-3 cursor-pointer">
             <input
@@ -74,16 +74,16 @@ onMounted(fetchTasks);
               class="hidden peer"
             />
             <div
-              class="w-6 h-6 border-[2px] border-black rounded-full flex items-center justify-center peer-checked:bg-blue-700 peer-checked:border-white transition-all duration-300 ease-in-out"
+              class="w-6 h-6 border-[2px] border-black rounded-full flex items-center justify-center peer-checked:bg-blue-400 peer-checked:border-red-200 transition-all duration-300 ease-in-out"
             >
               <i class="pi pi-check text-white peer-checked:opacity-100 opacity-0 transition-all duration-300"></i>
             </div>
           </label>
-          <h1 :class="{ 'line-through': task.is_completed }" class="font-bold text-xl">{{ task.name }}</h1>
+          <h1 :class="{ 'line-through': task.is_completed }" class="font-bold text-[16px] lg:text-xl">{{ task.name }}</h1>
         </div>
         <div class="flex flex-row gap-5">
-          <i class="pi pi-trash bg-black text-white p-3 rounded-full" @click="deleteTask(task.id)"></i>
-          <RouterLink :to="`/edit/${task.id}`" class="pi pi-pencil bg-black text-white p-3 rounded-full"></RouterLink>
+          <i class="pi pi-trash bg-black text-blue-200 p-3 rounded-full" @click="deleteTask(task.id)"></i>
+          <RouterLink :to="`/edit/${task.id}`" class="pi pi-pencil bg-black text-blue-200 p-3 rounded-full"></RouterLink>
         </div>
       </li>
     </ul>
