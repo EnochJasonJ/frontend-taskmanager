@@ -39,21 +39,62 @@ const fetchTasks = async () => {
     }
     fetchTasks();
   }
+  const toggleTaskCompletion = async (task) => {
+    try {
+      const token = localStorage.getItem("access_token");
+      if(!token){
+        throw new Error("No token found");
+      }
+      await axios.patch(`${backendURL}/update-tasks/${task.id}/`,{
+        is_completed: !task.is_completed
+      },{
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      task.is_completed = !task.is_completed;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 onMounted(fetchTasks);
 </script>
 
 <template>
-    <div  class="flex flex-col items-center justify-center">
-      <h1>Organize your day</h1>
-      <ul v-if="data" class="mb-[100px]">
-        <li v-for="post in data" :key="post.id" class="flex flex-row gap-5 p-5 w-[400px] items-center justify-between bg-red-300 mb-[25px] mt-[25px] rounded-md hover:cursor-pointer hover:scale-[110%] transition-all hover:duration-1000 ease-in-out">
-          <h1 class="font-bold text-xl">{{ post.name }}</h1>
-          <div class="flex flex-row gap-5">
-            <i class="pi pi-trash bg-black text-white p-3 rounded-full" @click="deleteTask(post.id)"></i>
-            <RouterLink :to="`/edit/${post.id}`" class="pi pi-pencil bg-black text-white p-3 rounded-full" ></RouterLink>
-          </div>
-        </li>
-      </ul>
-      <TaskForm class="fixed bottom-0" @task-added="fetchTasks" />
-    </div>
+  <div class="flex flex-col items-center justify-center">
+    <h1>Organize your day</h1>
+    <ul v-if="data" class="mb-[100px]">
+      <li v-for="task in data" :key="task.id" class="flex flex-row gap-5 p-5 w-[400px] items-center justify-between bg-red-300 mb-[25px] mt-[25px] rounded-md hover:cursor-pointer hover:scale-[110%] transition-all hover:duration-1000 ease-in-out">
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              :checked="task.is_completed"
+              @change="toggleTaskCompletion(task)"
+              class="hidden peer"
+            />
+            <div
+              class="w-6 h-6 border-[2px] border-black rounded-full flex items-center justify-center peer-checked:bg-blue-700 peer-checked:border-white transition-all duration-300 ease-in-out"
+            >
+              <i class="pi pi-check text-white peer-checked:opacity-100 opacity-0 transition-all duration-300"></i>
+            </div>
+          </label>
+          <h1 :class="{ 'line-through': task.is_completed }" class="font-bold text-xl">{{ task.name }}</h1>
+        </div>
+        <div class="flex flex-row gap-5">
+          <i class="pi pi-trash bg-black text-white p-3 rounded-full" @click="deleteTask(task.id)"></i>
+          <RouterLink :to="`/edit/${task.id}`" class="pi pi-pencil bg-black text-white p-3 rounded-full"></RouterLink>
+        </div>
+      </li>
+    </ul>
+    <TaskForm class="fixed bottom-0" @task-added="fetchTasks" />
+  </div>
 </template>
+
+
+<style>
+.line-through {
+  text-decoration: line-through;
+  color: rgb(0, 0, 0);
+}
+</style>
